@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vapi Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #fff;
+        }
+        button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #2563eb;
+        }
+        .result {
+            background: #2a2a2a;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            white-space: pre-wrap;
+        }
+        .success {
+            color: #10b981;
+        }
+        .error {
+            color: #ef4444;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Vapi Configuration Test</h1>
+    
+    <div>
+        <p><strong>Public Key:</strong> <span id="publicKey"></span></p>
+        <p><strong>Squad ID:</strong> <span id="squadId"></span></p>
+    </div>
+    
+    <button onclick="testVapi()">Test Vapi Connection</button>
+    <button onclick="testSquad()">Test Squad Configuration</button>
+    
+    <div id="result" class="result"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@vapi-ai/web@2.0.0/dist/index.js"></script>
+    <script>
+        const publicKey = '26609134-f710-4c77-82c2-95df3c2f4e74';
+        const squadId = 'fcca2560-199e-472a-92a5-68c8f57dfba1';
+        
+        document.getElementById('publicKey').textContent = publicKey;
+        document.getElementById('squadId').textContent = squadId;
+        
+        function log(message, isError = false) {
+            const resultDiv = document.getElementById('result');
+            const className = isError ? 'error' : 'success';
+            resultDiv.innerHTML += `<span class="${className}">${message}</span>\n`;
+        }
+        
+        async function testVapi() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '';
+            
+            log('🔍 Testing Vapi SDK initialization...');
+            
+            try {
+                const vapi = new window.Vapi(publicKey);
+                log('✅ Vapi SDK initialized successfully!');
+                
+                log('\n🎤 Testing microphone access...');
+                
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                log('✅ Microphone access granted!');
+                log(`   Audio tracks: ${stream.getAudioTracks().length}`);
+                stream.getTracks().forEach(track => track.stop());
+                
+                log('\n📞 Attempting to start call with Squad ID...');
+                
+                vapi.on('call-start', () => {
+                    log('✅ Call started successfully!');
+                    setTimeout(() => {
+                        vapi.stop();
+                        log('✅ Call stopped. Test complete!');
+                    }, 3000);
+                });
+                
+                vapi.on('error', (error) => {
+                    log(`❌ Vapi Error: ${JSON.stringify(error, null, 2)}`, true);
+                });
+                
+                vapi.on('message', (message) => {
+                    log(`📩 Message: ${message.type}`);
+                });
+                
+                await vapi.start(squadId);
+                
+            } catch (err) {
+                log(`\n❌ Error: ${err.message}`, true);
+                log(`   Name: ${err.name}`, true);
+                if (err.response) {
+                    log(`   Response: ${JSON.stringify(err.response, null, 2)}`, true);
+                }
+            }
+        }
+        
+        async function testSquad() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '';
+            
+            log('🔍 Testing Squad configuration...');
+            log(`   Squad ID: ${squadId}`);
+            
+            // Test if Squad ID is in correct format
+            if (!squadId || squadId === 'squad_xxxxxxxx') {
+                log('❌ Squad ID is not configured!', true);
+                return;
+            }
+            
+            log('✅ Squad ID format looks correct');
+            log('\n💡 To verify Squad exists:');
+            log('   1. Go to: https://dashboard.vapi.ai/squads');
+            log('   2. Look for Squad ID: ' + squadId);
+            log('   3. Check that Ram is first member');
+            log('   4. Check that handoff tools are configured');
+        }
+    </script>
+</body>
+</html>

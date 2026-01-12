@@ -1,0 +1,15 @@
+# Copy these from Vapi Dashboard
+NEXT_PUBLIC_VAPI_PUBLIC_KEY=pk_xxxxxxxx
+VAPI_PRIVATE_KEY=sk_xxxxxxxx
+
+# Copy Assistant IDs from each assistant
+NEXT_PUBLIC_RAM_ASSISTANT_ID=asst_xxxxxxxx
+NEXT_PUBLIC_SAM_ASSISTANT_ID=asst_xxxxxxxx
+NEXT_PUBLIC_SITA_ASSISTANT_ID=asst_xxxxxxxx
+
+# Optional for now
+NEXT_PUBLIC_ELEVENLABS_API_KEY=
+AZURE_CLIENT_ID=
+AZURE_TENANT_ID=
+AZURE_CLIENT_SECRET=
+MICROSOFT_BOOKINGS_BUSINESS_ID=
