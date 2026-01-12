@@ -110,18 +110,18 @@ export interface AgentStatus {
   transferring: boolean;
 }
 
-// Constants
+// Genesys Brand Colors
 export const AGENTS: Record<AgentName, Agent> = {
   Ram: {
     name: 'Ram',
     role: 'L1 Support',
     description: 'Basic IT support & triage',
-    color: '#3b82f6', // blue
+    color: '#FF4F1F', // Genesys Orange
   },
   Sam: {
     name: 'Sam',
     role: 'L2 Specialist',
     description: 'Advanced technical support',
-    color: '#8b5cf6', // purple
+    color: '#FF7D5C', // Genesys Coral
   },
 };

@@ -3,8 +3,11 @@
 @tailwind utilities;
 
 :root {
+  --genesys-orange: #FF4F1F;
+  --genesys-orange-light: #FF6B3D;
+  --genesys-coral: #FF7D5C;
   --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 10, 10, 10;
+  --background-start-rgb: 13, 13, 13;
   --background-end-rgb: 0, 0, 0;
 }
 
@@ -20,24 +23,33 @@ body {
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-  
   .glass-effect {
-    background: rgba(26, 26, 26, 0.7);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(26, 26, 26, 0.8);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 79, 31, 0.1);
   }
   
-  .agent-transition {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  .glass-effect-strong {
+    background: rgba(26, 26, 26, 0.95);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 79, 31, 0.15);
+  }
+  
+  .genesys-gradient {
+    background: linear-gradient(135deg, #FF4F1F 0%, #FF7D5C 100%);
+  }
+  
+  .genesys-text-gradient {
+    background: linear-gradient(135deg, #FF4F1F 0%, #FF7D5C 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar - Genesys Orange */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -45,26 +57,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #3b82f6;
-  border-radius: 4px;
+  background: #FF4F1F;
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #2563eb;
-}
-
-/* Audio visualizer animations */
-@keyframes wave {
-  0%, 100% {
-    transform: scaleY(0.5);
-  }
-  50% {
-    transform: scaleY(1);
-  }
-}
-
-.wave-bar {
-  animation: wave 1.5s ease-in-out infinite;
+  background: #FF6B3D;
 }
 
 /* Status indicator pulse */
@@ -74,11 +72,20 @@ body {
     transform: scale(1);
   }
   50% {
-    opacity: 0.5;
-    transform: scale(1.1);
+    opacity: 0.6;
+    transform: scale(1.15);
   }
 }
 
 .status-pulse {
   animation: status-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Genesys glow effect */
+.genesys-glow {
+  box-shadow: 0 0 30px rgba(255, 79, 31, 0.3);
+}
+
+.genesys-glow-strong {
+  box-shadow: 0 0 50px rgba(255, 79, 31, 0.5);
 }

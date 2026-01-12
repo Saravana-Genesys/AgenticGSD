@@ -83,8 +83,21 @@ export const VoicePlayground: React.FC<VoicePlaygroundProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-dark-bg to-black">
+    <div className="min-h-screen bg-gradient-to-b from-dark-bg to-black pb-8">
       <div className="container mx-auto px-4 py-6 max-w-7xl">
+        {/* Header */}
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg genesys-gradient flex items-center justify-center shadow-lg shadow-genesys-orange/30">
+              <span className="text-white font-bold">G</span>
+            </div>
+            <h1 className="text-2xl font-bold genesys-text-gradient">
+              Genesys AgenticGSD
+            </h1>
+          </div>
+          <span className="text-sm text-gray-500 hidden sm:block">AI IT Support</span>
+        </div>
+
         {/* Agent Status - Compact */}
         <div className="mb-6">
           <AgentStatus currentAgent={currentAgent} callStatus={callStatus} />

@@ -14,48 +14,47 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
   isSpeaking,
 }) => {
   const agent = AGENTS[currentAgent];
-  const bars = Array.from({ length: 24 }, (_, i) => i);
+  const bars = Array.from({ length: 28 }, (_, i) => i);
 
   return (
-    <div className="flex flex-col items-center justify-center h-full glass-effect rounded-xl p-6">
+    <div className="flex flex-col items-center justify-center h-full glass-effect rounded-2xl p-6">
       {/* Agent Avatar */}
       <div 
-        className={`w-20 h-20 rounded-full flex items-center justify-center mb-4 transition-all duration-300 ${
-          isSpeaking ? 'scale-110 shadow-2xl' : ''
+        className={`w-24 h-24 rounded-2xl flex items-center justify-center mb-5 transition-all duration-300 ${
+          isSpeaking ? 'scale-110 genesys-glow-strong' : ''
         }`}
         style={{ 
-          backgroundColor: agent.color,
-          boxShadow: isSpeaking ? `0 0 40px ${agent.color}50` : 'none'
+          background: `linear-gradient(135deg, ${agent.color} 0%, ${agent.color}CC 100%)`,
         }}
       >
-        <span className="text-3xl font-bold text-white">{currentAgent[0]}</span>
+        <span className="text-4xl font-bold text-white">{currentAgent[0]}</span>
       </div>
 
       {/* Agent Name */}
-      <h3 className="text-2xl font-bold mb-1" style={{ color: agent.color }}>
+      <h3 className="text-2xl font-bold text-genesys-orange mb-1">
         {agent.name}
       </h3>
       <p className="text-sm text-gray-500 mb-8">{agent.role}</p>
 
       {/* Audio Wave Visualizer */}
-      <div className="flex items-end justify-center gap-1 h-20 mb-6">
+      <div className="flex items-end justify-center gap-1 h-16 mb-6">
         {bars.map((i) => {
-          const baseHeight = 15;
+          const baseHeight = 12;
           const height = isSpeaking
-            ? baseHeight + Math.random() * 65
+            ? baseHeight + Math.random() * 70
             : baseHeight;
-          const delay = i * 0.03;
           
           return (
             <div
               key={i}
-              className="w-1.5 rounded-full transition-all"
+              className="w-1 rounded-full transition-all"
               style={{
                 height: `${height}%`,
-                backgroundColor: agent.color,
-                opacity: isSpeaking ? 0.6 + Math.random() * 0.4 : 0.25,
-                transitionDuration: isSpeaking ? '100ms' : '300ms',
-                animationDelay: `${delay}s`,
+                background: isSpeaking 
+                  ? `linear-gradient(to top, ${agent.color}, ${agent.color}80)`
+                  : '#333',
+                opacity: isSpeaking ? 0.6 + Math.random() * 0.4 : 0.3,
+                transitionDuration: isSpeaking ? '80ms' : '300ms',
               }}
             />
           );
@@ -65,8 +64,8 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
       {/* Status */}
       <div className="flex items-center gap-2">
         <div
-          className={`w-2 h-2 rounded-full ${isSpeaking ? 'animate-pulse' : ''}`}
-          style={{ backgroundColor: isSpeaking ? agent.color : '#666' }}
+          className={`w-2 h-2 rounded-full ${isSpeaking ? 'status-pulse' : ''}`}
+          style={{ backgroundColor: isSpeaking ? agent.color : '#555' }}
         />
         <span className="text-sm text-gray-400">
           {isSpeaking ? 'Speaking...' : 'Listening...'}

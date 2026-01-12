@@ -21,12 +21,12 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({ messages, messagesEndRef }
     if (agentName && (agentName === 'Ram' || agentName === 'Sam')) {
       return AGENTS[agentName as AgentName];
     }
-    return AGENTS['Ram']; // Default fallback
+    return AGENTS['Ram'];
   };
 
   return (
-    <div className="flex flex-col h-full glass-effect rounded-xl overflow-hidden">
-      <div className="p-4 border-b border-gray-800">
+    <div className="flex flex-col h-full glass-effect rounded-2xl overflow-hidden">
+      <div className="p-4 border-b border-genesys-orange/10">
         <h3 className="text-lg font-semibold text-white">Conversation</h3>
       </div>
 
@@ -40,7 +40,6 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({ messages, messagesEndRef }
         ) : (
           messages.map((message) => {
             if ('type' in message && message.type === 'transfer') {
-              // Transfer notification
               const fromAgent = getAgentData(message.from);
               const toAgent = getAgentData(message.to);
               return (
@@ -49,12 +48,11 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({ messages, messagesEndRef }
                   className="flex items-center justify-center gap-2 py-2 text-xs text-gray-500"
                 >
                   <span style={{ color: fromAgent.color }}>{message.from}</span>
-                  <ArrowRight size={12} />
+                  <ArrowRight size={12} className="text-genesys-orange" />
                   <span style={{ color: toAgent.color }}>{message.to}</span>
                 </div>
               );
             } else {
-              // Regular message
               const isUser = message.role === 'user';
               const agent = getAgentData(message.agent);
 
@@ -66,8 +64,8 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({ messages, messagesEndRef }
                   <div
                     className={`max-w-[85%] rounded-2xl px-4 py-2.5 ${
                       isUser
-                        ? 'bg-blue-600 text-white rounded-br-md'
-                        : 'bg-gray-800 text-gray-100 rounded-bl-md'
+                        ? 'genesys-gradient text-white rounded-br-md'
+                        : 'bg-dark-accent text-gray-100 rounded-bl-md'
                     }`}
                   >
                     {!isUser && (
@@ -79,7 +77,7 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({ messages, messagesEndRef }
                       </div>
                     )}
                     <div className="text-sm leading-relaxed">{message.content}</div>
-                    <div className={`text-xs mt-1 ${isUser ? 'text-blue-200' : 'text-gray-500'}`}>
+                    <div className={`text-xs mt-1 ${isUser ? 'text-white/60' : 'text-gray-500'}`}>
                       {formatTime(message.timestamp)}
                     </div>
                   </div>

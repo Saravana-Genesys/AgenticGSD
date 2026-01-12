@@ -40,9 +40,11 @@ export const useVapi = (publicKey: string): UseVapiReturn => {
 
       // Message received
       vapiRef.current.on('message', (message: any) => {
-        console.log('Message received:', message);
+        console.log('💬 Vapi message:', message);
 
         if (message.type === 'transcript' && message.transcript) {
+          console.log('📝 Transcript:', message.transcript, 'Type:', message.transcriptType, 'Role:', message.role);
+          
           const newMessage: Message = {
             id: `${Date.now()}-${Math.random()}`,
             role: message.role || 'assistant',
@@ -53,21 +55,37 @@ export const useVapi = (publicKey: string): UseVapiReturn => {
 
           // Only add final transcripts to avoid duplicates
           if (message.transcriptType === 'final') {
+            console.log('✅ Adding final transcript to chat');
             setMessages((prev) => [...prev, newMessage]);
           }
+        }
+        
+        // Log other message types
+        if (message.type !== 'transcript') {
+          console.log('ℹ️ Non-transcript message type:', message.type);
         }
       });
 
       // Speech started
       vapiRef.current.on('speech-start', () => {
-        console.log('Speech started');
+        console.log('🗣️ Agent speech started');
         setIsSpeaking(true);
       });
 
       // Speech ended
       vapiRef.current.on('speech-end', () => {
-        console.log('Speech ended');
+        console.log('🤫 Agent speech ended');
         setIsSpeaking(false);
+      });
+      
+      // User started speaking
+      vapiRef.current.on('user-speech-start', () => {
+        console.log('🎤 User started speaking');
+      });
+      
+      // User stopped speaking
+      vapiRef.current.on('user-speech-end', () => {
+        console.log('🛑 User stopped speaking');
       });
 
       // Error handling

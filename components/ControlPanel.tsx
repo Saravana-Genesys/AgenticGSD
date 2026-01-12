@@ -26,14 +26,14 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
   const isCallActive = callStatus === 'active' || callStatus === 'connecting';
 
   return (
-    <div className="flex items-center justify-center gap-4 p-5 glass-effect rounded-xl">
+    <div className="flex items-center justify-center gap-4 p-5 glass-effect rounded-2xl">
       {/* Audio Toggle */}
       <button
         onClick={onToggleAudio}
         disabled={!isCallActive}
-        className={`p-4 rounded-full transition-all duration-200 ${
+        className={`p-4 rounded-xl transition-all duration-200 ${
           audioEnabled
-            ? 'bg-gray-700 hover:bg-gray-600 text-white'
+            ? 'bg-dark-accent hover:bg-dark-border text-white'
             : 'bg-red-500/20 text-red-400 hover:bg-red-500/30'
         } ${!isCallActive ? 'opacity-40 cursor-not-allowed' : ''}`}
         title={audioEnabled ? 'Mute' : 'Unmute'}
@@ -45,9 +45,9 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
       <button
         onClick={onToggleVideo}
         disabled={!isCallActive}
-        className={`p-4 rounded-full transition-all duration-200 ${
+        className={`p-4 rounded-xl transition-all duration-200 ${
           videoEnabled
-            ? 'bg-gray-700 hover:bg-gray-600 text-white'
+            ? 'bg-dark-accent hover:bg-dark-border text-white'
             : 'bg-red-500/20 text-red-400 hover:bg-red-500/30'
         } ${!isCallActive ? 'opacity-40 cursor-not-allowed' : ''}`}
         title={videoEnabled ? 'Turn off camera' : 'Turn on camera'}
@@ -60,7 +60,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
         <button
           onClick={onStartCall}
           disabled={callStatus === 'connecting'}
-          className="px-8 py-4 rounded-full bg-green-500 hover:bg-green-600 transition-all duration-200 flex items-center gap-3 font-semibold text-white shadow-lg shadow-green-500/25 disabled:opacity-50"
+          className="px-8 py-4 rounded-xl genesys-gradient hover:opacity-90 transition-all duration-200 flex items-center gap-3 font-semibold text-white shadow-lg shadow-genesys-orange/25 disabled:opacity-50"
         >
           <Phone size={22} />
           <span>{callStatus === 'connecting' ? 'Connecting...' : 'Start Call'}</span>
@@ -68,7 +68,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
       ) : (
         <button
           onClick={onEndCall}
-          className="px-8 py-4 rounded-full bg-red-500 hover:bg-red-600 transition-all duration-200 flex items-center gap-3 font-semibold text-white shadow-lg shadow-red-500/25"
+          className="px-8 py-4 rounded-xl bg-red-500 hover:bg-red-600 transition-all duration-200 flex items-center gap-3 font-semibold text-white shadow-lg shadow-red-500/25"
         >
           <PhoneOff size={22} />
           <span>End Call</span>

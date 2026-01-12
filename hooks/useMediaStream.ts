@@ -38,6 +38,11 @@ export const useMediaStream = (): UseMediaStreamReturn => {
     const rms = Math.sqrt(sum / dataArray.length);
     const normalizedLevel = Math.min(1, rms * 3); // Amplify for visibility
 
+    // Log audio level occasionally (every 30 frames)
+    if (Math.random() < 0.03) {
+      console.log('🎤 Audio Level:', Math.round(normalizedLevel * 100) + '%');
+    }
+
     setState((prev) => ({ ...prev, audioLevel: normalizedLevel }));
 
     animationFrameRef.current = requestAnimationFrame(monitorAudioLevel);
@@ -68,6 +73,14 @@ export const useMediaStream = (): UseMediaStreamReturn => {
 
       const hasVideo = mediaStream.getVideoTracks().length > 0;
       const hasAudio = mediaStream.getAudioTracks().length > 0;
+
+      console.log('📹 Media Stream Started:', {
+        hasVideo,
+        hasAudio,
+        videoTracks: mediaStream.getVideoTracks().length,
+        audioTracks: mediaStream.getAudioTracks().length,
+        stream: mediaStream
+      });
 
       setState((prev) => ({ 
         ...prev, 
