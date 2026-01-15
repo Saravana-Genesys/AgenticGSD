@@ -1,8 +1,7 @@
 'use client';
 
 import React from 'react';
-import { AGENTS, type ChatMessage, type AgentName } from '@/lib/types';
-import { ArrowRight } from 'lucide-react';
+import { type ChatMessage } from '@/lib/types';
 
 interface ChatPanelProps {
   messages: ChatMessage[];
@@ -17,17 +16,10 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({ messages, messagesEndRef }
     });
   };
 
-  const getAgentData = (agentName: string | undefined) => {
-    if (agentName && (agentName === 'Ram' || agentName === 'Sam')) {
-      return AGENTS[agentName as AgentName];
-    }
-    return AGENTS['Ram'];
-  };
-
   return (
     <div className="flex flex-col h-full glass-effect rounded-2xl overflow-hidden">
       <div className="p-4 border-b border-genesys-orange/10">
-        <h3 className="text-lg font-semibold text-white">Conversation</h3>
+        <h3 className="text-lg font-semibold text-white">AgenticGSD</h3>
       </div>
 
       <div className="flex-1 overflow-y-auto p-4 space-y-3">
@@ -40,21 +32,10 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({ messages, messagesEndRef }
         ) : (
           messages.map((message) => {
             if ('type' in message && message.type === 'transfer') {
-              const fromAgent = getAgentData(message.from);
-              const toAgent = getAgentData(message.to);
-              return (
-                <div
-                  key={message.id}
-                  className="flex items-center justify-center gap-2 py-2 text-xs text-gray-500"
-                >
-                  <span style={{ color: fromAgent.color }}>{message.from}</span>
-                  <ArrowRight size={12} className="text-genesys-orange" />
-                  <span style={{ color: toAgent.color }}>{message.to}</span>
-                </div>
-              );
+              // Hide transfer indicators for generic UI
+              return null;
             } else {
               const isUser = message.role === 'user';
-              const agent = getAgentData(message.agent);
 
               return (
                 <div
@@ -70,10 +51,9 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({ messages, messagesEndRef }
                   >
                     {!isUser && (
                       <div
-                        className="text-xs font-medium mb-1"
-                        style={{ color: agent.color }}
+                        className="text-xs font-medium mb-1 text-genesys-orange"
                       >
-                        {agent.name}
+                        AgenticGSD
                       </div>
                     )}
                     <div className="text-sm leading-relaxed">{message.content}</div>

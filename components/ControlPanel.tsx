@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Mic, MicOff, Video, VideoOff, Phone, PhoneOff } from 'lucide-react';
+import { Mic, MicOff, Phone, PhoneOff } from 'lucide-react';
 import type { CallStatus } from '@/lib/types';
 
 interface ControlPanelProps {
@@ -17,11 +17,9 @@ interface ControlPanelProps {
 export const ControlPanel: React.FC<ControlPanelProps> = ({
   callStatus,
   audioEnabled,
-  videoEnabled,
   onStartCall,
   onEndCall,
   onToggleAudio,
-  onToggleVideo,
 }) => {
   const isCallActive = callStatus === 'active' || callStatus === 'connecting';
 
@@ -39,20 +37,6 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
         title={audioEnabled ? 'Mute' : 'Unmute'}
       >
         {audioEnabled ? <Mic size={22} /> : <MicOff size={22} />}
-      </button>
-
-      {/* Video Toggle */}
-      <button
-        onClick={onToggleVideo}
-        disabled={!isCallActive}
-        className={`p-4 rounded-xl transition-all duration-200 ${
-          videoEnabled
-            ? 'bg-dark-accent hover:bg-dark-border text-white'
-            : 'bg-red-500/20 text-red-400 hover:bg-red-500/30'
-        } ${!isCallActive ? 'opacity-40 cursor-not-allowed' : ''}`}
-        title={videoEnabled ? 'Turn off camera' : 'Turn on camera'}
-      >
-        {videoEnabled ? <Video size={22} /> : <VideoOff size={22} />}
       </button>
 
       {/* Call Button */}

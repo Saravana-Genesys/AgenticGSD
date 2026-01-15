@@ -6,7 +6,6 @@ import { useMediaStream } from '@/hooks/useMediaStream';
 import { useChat } from '@/hooks/useChat';
 import { AudioVisualizer } from './AudioVisualizer';
 import { ChatPanel } from './ChatPanel';
-import { VideoPanel } from './VideoPanel';
 import { ControlPanel } from './ControlPanel';
 import { AgentStatus } from './AgentStatus';
 
@@ -103,9 +102,9 @@ export const VoicePlayground: React.FC<VoicePlaygroundProps> = ({
           <AgentStatus currentAgent={currentAgent} callStatus={callStatus} />
         </div>
 
-        {/* Main Grid Layout - 3 columns */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-6">
-          {/* Left - Agent Audio */}
+        {/* Main Grid Layout - 2 columns */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-6">
+          {/* Left - Agent Audio Visualizer */}
           <div className="h-[450px]">
             <AudioVisualizer
               currentAgent={currentAgent}
@@ -114,18 +113,9 @@ export const VoicePlayground: React.FC<VoicePlaygroundProps> = ({
             />
           </div>
 
-          {/* Center - Chat */}
+          {/* Right - Chat */}
           <div className="h-[450px]">
             <ChatPanel messages={messages} messagesEndRef={messagesEndRef} />
-          </div>
-
-          {/* Right - Video */}
-          <div className="h-[450px]">
-            <VideoPanel
-              stream={stream}
-              videoEnabled={videoEnabled}
-              audioLevel={audioLevel}
-            />
           </div>
         </div>
 
