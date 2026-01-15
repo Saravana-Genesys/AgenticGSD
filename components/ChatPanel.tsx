@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { type ChatMessage } from '@/lib/types';
+import { type ChatMessage, type Message } from '@/lib/types';
 
 interface ChatPanelProps {
   messages: ChatMessage[];
@@ -35,11 +35,13 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({ messages, messagesEndRef }
               // Hide transfer indicators for generic UI
               return null;
             } else {
-              const isUser = message.role === 'user';
+              // TypeScript type narrowing: we know this is a Message, not TransferMessage
+              const msg = message as Message;
+              const isUser = msg.role === 'user';
 
               return (
                 <div
-                  key={message.id}
+                  key={msg.id}
                   className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
@@ -56,9 +58,9 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({ messages, messagesEndRef }
                         AgenticGSD
                       </div>
                     )}
-                    <div className="text-sm leading-relaxed">{message.content}</div>
+                    <div className="text-sm leading-relaxed">{msg.content}</div>
                     <div className={`text-xs mt-1 ${isUser ? 'text-white/60' : 'text-gray-500'}`}>
-                      {formatTime(message.timestamp)}
+                      {formatTime(msg.timestamp)}
                     </div>
                   </div>
                 </div>
